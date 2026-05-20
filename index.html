@@ -1,13 +1,96 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <!-- Primary Meta -->
+  <meta name="description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
+  <meta name="keywords" content="base64 encode, base64 decode, base64 image converter, base64编码, base64解码, data uri generator">
+  <meta name="author" content="Dudu Tools">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://base64-tool.vercel.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Base64 Tool - 免费在线工具">
+  <meta property="og:description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
+  <meta property="og:url" content="https://base64-tool.vercel.app/">
+  <meta property="og:image" content="https://base64-tool.vercel.app/og-image.png">
+  <meta property="og:site_name" content="Base64 Tool">
+  <meta property="og:locale" content="zh_CN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Base64 Tool - 免费在线工具">
+  <meta name="twitter:description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
+  <meta name="twitter:image" content="https://base64-tool.vercel.app/og-image.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Base64 Tool - Base64 编解码与图片转换在线工具</title>
-  <meta name="description" content="免费在线 Base64 编解码工具。文本/文件/图片 Base64 互转，支持批量处理。浏览器端处理，文件不上传。">
-  <meta name="keywords" content="base64 encode, base64 decode, base64 image, base64 encoder decoder, online base64 tool">
-  <link rel="canonical" href="https://base64-tool.vercel.app/">
+  <title>Base64 Tool - 免费在线工具 | 浏览器端处理 · 隐私安全</title>
   <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Base64 Tool",
+  "description": "Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。",
+  "url": "https://base64-tool.vercel.app/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "文本Base64编码与解码",
+    "URL安全模式(替换+/)",
+    "图片拖拽转Base64",
+    "任意文件转Base64",
+    "Base64还原为文件下载",
+    "Data URI自动生成"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Base64 编码有什么用途？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Base64 常用于在 URL 参数、CSS、HTML、JSON 中传输二进制数据，以及邮件附件编码。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "我的数据安全吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "所有处理在浏览器端完成，文件不上传服务器，确保数据绝对安全。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何将图片转为 Base64？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "拖拽图片到上传区域，工具会自动生成 Base64 数据和 Data URI，可直接用于 HTML/CSS。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何将 Base64 还原为文件？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "粘贴 Base64 数据到指定区域，输入文件名，点击下载即可还原为原始文件。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <header class="header">

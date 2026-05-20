@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://base64-tool.vercel.app/sitemap.xml
