@@ -1,0 +1,44 @@
+# Base64 Tool
+
+> A private online Base64 encoder and decoder for text, images, files, and Data URIs. Everything runs locally in the browser, so files are not uploaded to a server.
+
+Canonical URL: https://base64.toolkitbox.org/
+Chinese URL: https://base64.toolkitbox.org/zh/
+
+## What it does
+
+- Encode plain text to Base64
+- Decode Base64 back to readable text
+- Convert images and files to Base64
+- Generate Data URIs for HTML and CSS
+- Restore Base64 data as downloadable files
+- Use URL-safe Base64 output
+
+## Best for
+
+- Embed small images in CSS or HTML
+- Debug API payloads and encoded strings
+- Convert files for testing or documentation
+- Decode Base64 data without sending it to a server
+
+## Privacy
+
+This tool is designed for browser-based processing whenever possible. User-provided content is not stored by ToolkitBox.
+
+## FAQ
+
+### What is Base64 encoding used for?
+
+Base64 is commonly used to represent binary data in text-only formats such as JSON, HTML, CSS, email, and URL parameters.
+
+### Is this Base64 tool private?
+
+Yes. Encoding, decoding, and file conversion run in your browser. Your text and files are not uploaded.
+
+### Can I convert an image to Base64?
+
+Yes. Drop an image or choose a file, and the tool generates both raw Base64 and a Data URI that can be copied into HTML or CSS.
+
+### Can I decode Base64 back into a file?
+
+Yes. Paste Base64 data, choose a file name, and download the restored file directly from your browser.

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Primary Meta -->
+  <meta name="description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
+  <meta name="keywords" content="base64 encode, base64 decode, base64 image converter, base64编码, base64解码, data uri generator">
+  <meta name="author" content="ToolkitBox">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://base64.toolkitbox.org/zh/">
+  <link rel="alternate" hreflang="en" href="https://base64.toolkitbox.org/">
+  <link rel="alternate" hreflang="zh-CN" href="https://base64.toolkitbox.org/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://base64.toolkitbox.org/">
+<!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Base64 Tool - 免费在线工具">
+  <meta property="og:description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
+  <meta property="og:url" content="https://base64.toolkitbox.org/zh/">
+<meta property="og:site_name" content="Base64 Tool">
+  <meta property="og:locale" content="zh_CN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Base64 Tool - 免费在线工具">
+  <meta name="twitter:description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Tool - 免费在线工具 | 浏览器端处理 · 隐私安全</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Base64 Tool",
+  "description": "Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。",
+  "url": "https://base64.toolkitbox.org/zh/",
+  "inLanguage": "zh-CN",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Encode plain text to Base64",
+    "Decode Base64 back to readable text",
+    "Convert images and files to Base64",
+    "Generate Data URIs for HTML and CSS",
+    "Restore Base64 data as downloadable files",
+    "Use URL-safe Base64 output"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "ToolkitBox"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "zh-CN",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Base64 编码有什么用途？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Base64 常用于在 URL 参数、CSS、HTML、JSON、邮件附件等文本环境中传输二进制数据。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "这个工具安全吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "安全。编码、解码和文件转换都在浏览器端完成，文本和文件不会上传服务器。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "可以把图片转成 Base64 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。拖拽图片或选择文件后，工具会生成 Base64 和 Data URI，可用于 HTML/CSS。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "可以把 Base64 还原成文件吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。粘贴 Base64 数据并设置文件名，即可在浏览器中下载还原文件。"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <h1 class="logo">🔣 Base64 Tool</h1>
+        <p class="tagline">Base64 编解码 · 图片/文件互转 · 浏览器端处理</p>
+        <nav class="language-switcher" aria-label="Language"><a class="home-link" href="https://toolkitbox.org/zh/">工具首页</a><a class="" href="../" lang="en">EN</a><a class="active" href="./" lang="zh-CN">中文</a></nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main container">
+    <!-- Tab Navigation -->
+    <nav class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="text" tabindex="0">
+        <span class="tab-icon">📝</span>
+        <span class="tab-label">文本编解码</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="image" tabindex="-1">
+        <span class="tab-icon">🖼️</span>
+        <span class="tab-label">图片/文件</span>
+      </button>
+    </nav>
+
+    <!-- === Tab: Text === -->
+    <section class="tab-panel active" id="panel-text" role="tabpanel">
+      <div class="panel-body">
+        <!-- Direction -->
+        <div class="direction-bar">
+          <button class="dir-btn active" data-dir="encode">编码 →</button>
+          <button class="dir-btn" data-dir="decode">← 解码</button>
+        </div>
+
+        <!-- Options -->
+        <div class="options-bar">
+          <label class="checkbox-label">
+            <input type="checkbox" id="opt-urlsafe">
+            URL 安全模式（替换 +/ 为 -_）
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="opt-wrap" checked>
+            每 76 字符换行
+          </label>
+        </div>
+
+        <!-- Input -->
+        <div class="input-section">
+          <div class="editor-panel">
+            <div class="editor-header">
+              <label for="text-input">输入</label>
+              <div class="editor-actions">
+                <button class="btn btn-sm" onclick="loadTextSample()">📝 示例</button>
+                <button class="btn btn-sm" onclick="clearInput()">清空</button>
+                <span id="input-size" class="size-badge">0 B</span>
+              </div>
+            </div>
+            <textarea id="text-input" class="code-editor" placeholder="粘贴文本或 Base64 字符串..." spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="action-bar">
+          <button class="btn btn-primary btn-lg" onclick="processText()">⚡ 转换</button>
+        </div>
+
+        <!-- Output -->
+        <div class="input-section">
+          <div class="editor-panel">
+            <div class="editor-header">
+              <label for="text-output">输出</label>
+              <div class="editor-actions">
+                <span id="output-size" class="size-badge">0 B</span>
+                <button class="btn btn-sm" onclick="copyOutput()">📋 复制</button>
+                <button class="btn btn-sm" onclick="downloadOutput()">⬇ 下载</button>
+              </div>
+            </div>
+            <textarea id="text-output" class="code-editor" readonly placeholder="结果将显示在这里..." spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <div id="text-status" class="status-bar"></div>
+      </div>
+    </section>
+
+    <!-- === Tab: Image/File === -->
+    <section class="tab-panel" id="panel-image" role="tabpanel" hidden>
+      <div class="panel-body">
+        <!-- Upload Area -->
+        <div class="upload-section">
+          <div id="drop-zone" class="drop-zone">
+            <div class="drop-content">
+              <span class="drop-icon">📁</span>
+              <p>拖拽文件到此处或点击选择</p>
+              <p class="drop-hint">支持图片、PDF、ZIP 等任何文件</p>
+            </div>
+            <input type="file" id="file-input" class="file-input" accept="*/*">
+          </div>
+        </div>
+
+        <!-- File Info -->
+        <div id="file-info" class="file-info" style="display:none">
+          <div class="file-detail">
+            <span id="file-name" class="file-name"></span>
+            <span id="file-type" class="file-type-badge"></span>
+            <span id="file-size-info" class="file-size-text"></span>
+          </div>
+          <div class="file-preview" id="file-preview"></div>
+        </div>
+
+        <!-- Image to Base64 -->
+        <div class="input-section">
+          <div class="editor-panel">
+            <div class="editor-header">
+              <label>Base64 数据</label>
+              <div class="editor-actions">
+                <span id="b64-size" class="size-badge">0 B</span>
+                <button class="btn btn-sm" onclick="copyB64()">📋 复制</button>
+              </div>
+            </div>
+            <textarea id="b64-output" class="code-editor" readonly placeholder="Base64 数据将显示在这里..." spellcheck="false" style="min-height:160px"></textarea>
+          </div>
+        </div>
+
+        <!-- Data URI -->
+        <div class="input-section">
+          <div class="editor-panel">
+            <div class="editor-header">
+              <label>Data URI</label>
+              <div class="editor-actions">
+                <button class="btn btn-sm" onclick="copyDataUri()">📋 复制</button>
+              </div>
+            </div>
+            <textarea id="data-uri-output" class="code-editor" readonly placeholder="data:image/png;base64,..." spellcheck="false" style="min-height:80px"></textarea>
+          </div>
+        </div>
+
+        <!-- Base64 to File -->
+        <div class="decode-section">
+          <div class="section-title">从 Base64 还原文件</div>
+          <div class="editor-panel">
+            <div class="editor-header">
+              <label for="b64-input">粘贴 Base64 数据</label>
+              <div class="editor-actions">
+                <button class="btn btn-sm" onclick="clearB64Input()">清空</button>
+              </div>
+            </div>
+            <textarea id="b64-input" class="code-editor" placeholder="粘贴 Base64 字符串或 Data URI..." spellcheck="false" style="min-height:100px"></textarea>
+          </div>
+          <div class="action-bar">
+            <label class="checkbox-label">
+              <input type="text" id="decode-filename" class="small-input" placeholder="文件名（含扩展名）" value="decoded-file">
+              <span class="hint">.png</span>
+            </label>
+            <button class="btn btn-primary" onclick="decodeB64()">⬇ 下载还原文件</button>
+          </div>
+        </div>
+
+        <div id="file-status" class="status-bar"></div>
+      </div>
+    </section>
+    <section class="seo-content" aria-label="工具说明和常见问题">
+      <div class="seo-block">
+        <h2>Base64 Tool 是什么？</h2>
+        <p>一个用于文本、图片、文件和 Data URI 的 Base64 编解码工具。所有处理都在浏览器端完成，文件不会上传服务器。</p>
+      </div>
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2>主要功能</h2>
+          <ul><li>Encode plain text to Base64</li><li>Decode Base64 back to readable text</li><li>Convert images and files to Base64</li><li>Generate Data URIs for HTML and CSS</li><li>Restore Base64 data as downloadable files</li><li>Use URL-safe Base64 output</li></ul>
+        </div>
+        <div class="seo-block">
+          <h2>适合场景</h2>
+          <ul><li>开发、调试或发布前的日常处理</li><li>在浏览器端快速完成任务，减少数据上传</li><li>为技术文档、测试数据或线上内容做准备</li></ul>
+        </div>
+      </div>
+      <div class="seo-block faq-list">
+        <h2>常见问题</h2>
+        <details><summary>Base64 编码有什么用途？</summary><p>Base64 常用于在 URL 参数、CSS、HTML、JSON、邮件附件等文本环境中传输二进制数据。</p></details>
+        <details><summary>这个工具安全吗？</summary><p>安全。编码、解码和文件转换都在浏览器端完成，文本和文件不会上传服务器。</p></details>
+        <details><summary>可以把图片转成 Base64 吗？</summary><p>可以。拖拽图片或选择文件后，工具会生成 Base64 和 Data URI，可用于 HTML/CSS。</p></details>
+        <details><summary>可以把 Base64 还原成文件吗？</summary><p>可以。粘贴 Base64 数据并设置文件名，即可在浏览器中下载还原文件。</p></details>
+      </div>
+      <div class="seo-block related-tools">
+        <h2>相关工具</h2>
+        <div class="related-links"><a href="https://json.toolkitbox.org/zh/">JSON 格式化</a><a href="https://url.toolkitbox.org/zh/">URL 编码解码</a><a href="https://uuid.toolkitbox.org/zh/">UUID 生成器</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>🔣 Base64 Tool — 所有处理在浏览器端完成，文件不上传服务器</p>
+      <p class="footer-small">纯前端工具 · 零服务端 · 隐私安全</p>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
