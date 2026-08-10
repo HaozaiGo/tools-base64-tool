@@ -15,11 +15,16 @@
   <meta property="og:title" content="Base64 Tool - 免费在线工具">
   <meta property="og:description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
   <meta property="og:url" content="https://base64.toolkitbox.org/zh/">
+  <meta property="og:image" content="https://base64.toolkitbox.org/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Base64 Tool - 免费在线工具">
 <meta property="og:site_name" content="Base64 Tool">
   <meta property="og:locale" content="zh_CN">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://base64.toolkitbox.org/og.png">
   <meta name="twitter:title" content="Base64 Tool - 免费在线工具">
   <meta name="twitter:description" content="Base64编解码在线工具。文本编码解码、图片和文件互转、Data URI生成。浏览器端处理，文件不上传。">
 <meta charset="UTF-8">
@@ -94,6 +99,27 @@
         "@type": "Answer",
         "text": "可以。粘贴 Base64 数据并设置文件名，即可在浏览器中下载还原文件。"
       }
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "inLanguage": "zh-CN",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ToolkitBox",
+      "item": "https://toolkitbox.org/zh/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Base64 Tool",
+      "item": "https://base64.toolkitbox.org/zh/"
     }
   ]
 }
@@ -276,12 +302,35 @@
           <ul><li>开发、调试或发布前的日常处理</li><li>在浏览器端快速完成任务，减少数据上传</li><li>为技术文档、测试数据或线上内容做准备</li></ul>
         </div>
       </div>
+      <div class="seo-block example-workflow">
+        <h2>示例工作流</h2>
+        <ol>
+          <li>先选择处理普通文本、URL 安全文本还是文件。</li>
+          <li>编码后再解码一次，确认内容可以正确往返还原。</li>
+          <li>检查输出中的填充符、换行和异常字符。</li>
+          <li>确认解码内容正确后，再复制结果或下载文件。</li>
+        </ol>
+      </div>
+
+      <div class="seo-block safe-use">
+        <h2>安全使用提示</h2>
+        <ul>
+          <li>Base64 是编码，不是加密，不能保护敏感信息。</li>
+          <li>不要在共享设备上粘贴私人令牌、密码或机密文件。</li>
+          <li>如果结果要放进 URL 路径或查询参数，优先使用 URL 安全格式。</li>
+        </ul>
+      </div>
+
       <div class="seo-block faq-list">
         <h2>常见问题</h2>
         <details><summary>Base64 编码有什么用途？</summary><p>Base64 常用于在 URL 参数、CSS、HTML、JSON、邮件附件等文本环境中传输二进制数据。</p></details>
         <details><summary>这个工具安全吗？</summary><p>安全。编码、解码和文件转换都在浏览器端完成，文本和文件不会上传服务器。</p></details>
         <details><summary>可以把图片转成 Base64 吗？</summary><p>可以。拖拽图片或选择文件后，工具会生成 Base64 和 Data URI，可用于 HTML/CSS。</p></details>
         <details><summary>可以把 Base64 还原成文件吗？</summary><p>可以。粘贴 Base64 数据并设置文件名，即可在浏览器中下载还原文件。</p></details>
+      </div>
+      <div class="seo-block related-guides">
+        <h2>相关指南</h2>
+        <p><a href="https://toolkitbox.org/zh/guides/base64-encoding-best-practices/">Base64 编码：什么时候该用，什么时候不该用</a></p>
       </div>
       <div class="seo-block related-tools">
         <h2>相关工具</h2>
