@@ -1,5 +1,9 @@
 /* === Base64 Tool - App Logic === */
 
+function uiText(en, zh) {
+  return document.documentElement.lang.startsWith('zh') ? zh : en;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initDirectionButtons();
@@ -48,9 +52,9 @@ function initDirectionButtons() {
 function updateDirectionUI() {
   const input = document.getElementById('text-input');
   if (currentDir === 'encode') {
-    input.placeholder = '粘贴要编码的文本...';
+    input.placeholder = uiText('Paste text to encode...', '粘贴要编码的文本...');
   } else {
-    input.placeholder = '粘贴 Base64 字符串...';
+    input.placeholder = uiText('Paste a Base64 string...', '粘贴 Base64 字符串...');
   }
 }
 
@@ -97,9 +101,9 @@ function processText() {
     if (currentDir === 'encode') {
       const ratio = ((1 - outBytes / inBytes) * 100).toFixed(1);
       const growth = parseFloat(ratio);
-      showStatus(status, `✅ 编码完成: ${formatBytes(inBytes)} → ${formatBytes(outBytes)} (膨胀 ${Math.abs(growth)}%)`, 'success');
+      showStatus(status, uiText('Encoded: ', '编码完成: ') + `${formatBytes(inBytes)} → ${formatBytes(outBytes)} (+${Math.abs(growth)}%)`, 'success');
     } else {
-      showStatus(status, `✅ 解码完成: ${formatBytes(inBytes)} → ${formatBytes(outBytes)}`, 'success');
+      showStatus(status, uiText('Decoded: ', '解码完成: ') + `${formatBytes(inBytes)} → ${formatBytes(outBytes)}`, 'success');
     }
   } catch (e) {
     document.getElementById('text-output').value = '';
@@ -129,13 +133,14 @@ function encodeBase64(str) {
   return b64;
 }
 
-function decodeBase64(str) {
+function parseBase64(str) {
   let cleaned = str.trim();
-  
-  // Strip data URI prefix if present
-  const dataUriMatch = cleaned.match(/^data:[^;]+;base64,(.+)/i);
-  if (dataUriMatch) {
-    cleaned = dataUriMatch[1];
+  let mimeType = '';
+  if (/^data:/i.test(cleaned)) {
+    const match = cleaned.match(/^data:([^,]*);base64,([\s\S]*)$/i);
+    if (!match) throw new Error(uiText('Invalid Base64 Data URI', '无效的 Base64 Data URI'));
+    mimeType = match[1].split(';')[0] || 'text/plain';
+    cleaned = match[2];
   }
 
   // Remove whitespace
@@ -149,8 +154,13 @@ function decodeBase64(str) {
 
   // Validate
   if (!/^[A-Za-z0-9+/]*=*$/.test(cleaned)) {
-    throw new Error('无效的 Base64 字符串（包含非法字符）');
+    throw new Error(uiText('Invalid Base64 string (illegal characters)', '无效的 Base64 字符串（包含非法字符）'));
   }
+  return { cleaned, mimeType };
+}
+
+function decodeBase64(str) {
+  const { cleaned } = parseBase64(str);
 
   try {
     const binary = atob(cleaned);
@@ -174,12 +184,12 @@ function decodeBase64(str) {
         }
       }
       if (hasNonText) {
-        throw new Error('解码后的数据不是可读文本，请使用"图片/文件"标签页还原为文件');
+        throw new Error(uiText('Binary data: use the Image/File tab to restore a file', '解码后的数据不是可读文本，请使用"图片/文件"标签页还原为文件'));
       }
       // Return raw latin-1
       return binary;
     } catch (err) {
-      throw new Error(`解码失败: ${err.message}`);
+      throw new Error(uiText('Decoding failed: ', '解码失败: ') + err.message);
     }
   }
 }
@@ -221,52 +231,54 @@ function handleFile(file) {
   // Show file info
   document.getElementById('file-info').style.display = 'block';
   document.getElementById('file-name').textContent = file.name;
-  document.getElementById('file-type').textContent = file.type || '未知';
+  document.getElementById('file-type').textContent = file.type || uiText('Unknown', '未知');
   document.getElementById('file-size-info').textContent = formatBytes(file.size);
 
   // Preview for images
   const preview = document.getElementById('file-preview');
-  if (file.type.startsWith('image/')) {
-    const img = document.createElement('img');
-    img.file = file;
-    preview.innerHTML = '';
-    preview.appendChild(img);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      img.src = e.target.result;
-      // Also populate base64
-      const b64 = e.target.result.split(',')[1];
-      document.getElementById('b64-output').value = b64;
-      document.getElementById('b64-size').textContent = formatBytes(new Blob([b64]).size);
-      document.getElementById('data-uri-output').value = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  } else {
-    preview.innerHTML = `<div style="padding: 20px; color: var(--text-muted);">📄 ${file.name} (非图片文件，Base64 已生成)</div>`;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const b64 = e.target.result.split(',')[1];
-      document.getElementById('b64-output').value = b64;
-      document.getElementById('b64-size').textContent = formatBytes(new Blob([b64]).size);
-      document.getElementById('data-uri-output').value = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
   const status = document.getElementById('file-status');
-  showStatus(status, `✅ 文件已加载: ${file.name}`, 'success');
+  preview.replaceChildren();
+  document.getElementById('b64-output').value = '';
+  document.getElementById('data-uri-output').value = '';
+  document.getElementById('b64-size').textContent = '0 B';
+  showStatus(status, uiText('Loading: ', '正在加载: ') + file.name, 'info');
+  const reader = new FileReader();
+  reader.onload = () => {
+    if (currentFile !== file) return;
+    const dataUri = reader.result;
+    const b64 = dataUri.slice(dataUri.indexOf(',') + 1);
+    document.getElementById('b64-output').value = b64;
+    document.getElementById('b64-size').textContent = formatBytes(new Blob([b64]).size);
+    document.getElementById('data-uri-output').value = dataUri;
+    if (file.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.alt = file.name;
+      img.src = dataUri;
+      preview.appendChild(img);
+    } else {
+      const info = document.createElement('div');
+      info.style.cssText = 'padding:20px;color:var(--text-muted)';
+      info.textContent = file.name + uiText(' (Base64 generated)', '（Base64 已生成）');
+      preview.appendChild(info);
+    }
+    showStatus(status, uiText('File loaded: ', '文件已加载: ') + file.name, 'success');
+  };
+  reader.onerror = () => {
+    if (currentFile === file) showStatus(status, uiText('Could not read file', '无法读取文件'), 'error');
+  };
+  reader.readAsDataURL(file);
 }
 
 function copyB64() {
   const val = document.getElementById('b64-output').value;
-  if (!val) { showToast('❌ 没有 Base64 数据'); return; }
-  navigator.clipboard.writeText(val).then(() => showToast('✅ 已复制'));
+  if (!val) { showToast(uiText('No Base64 data', '没有 Base64 数据')); return; }
+  copyText(val);
 }
 
 function copyDataUri() {
   const val = document.getElementById('data-uri-output').value;
-  if (!val) { showToast('❌ 没有 Data URI'); return; }
-  navigator.clipboard.writeText(val).then(() => showToast('✅ 已复制'));
+  if (!val) { showToast(uiText('No Data URI', '没有 Data URI')); return; }
+  copyText(val);
 }
 
 function clearB64Input() {
@@ -277,24 +289,11 @@ function decodeB64() {
   const input = document.getElementById('b64-input').value.trim();
   const filename = document.getElementById('decode-filename').value.trim() || 'decoded-file';
 
-  if (!input) { showToast('❌ 请粘贴 Base64 数据'); return; }
+  if (!input) { showToast(uiText('Paste Base64 data', '请粘贴 Base64 数据')); return; }
 
   try {
-    let b64 = input;
-    let mimeType = '';
-    
-    // Check if it's a data URI
-    const dataUriMatch = input.match(/^data:([^;]+);base64,(.+)/i);
-    if (dataUriMatch) {
-      mimeType = dataUriMatch[1];
-      b64 = dataUriMatch[2];
-    }
-
-    // Clean
-    b64 = b64.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
-    while (b64.length % 4 !== 0) b64 += '=';
-
-    const binary = atob(b64);
+    const { cleaned, mimeType } = parseBase64(input);
+    const binary = atob(cleaned);
     const bytes = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) {
       bytes[i] = binary.charCodeAt(i);
@@ -310,7 +309,6 @@ function decodeB64() {
       'application/json': '.json'
     };
     if (mimeType && mimeMap[mimeType]) ext = mimeMap[mimeType];
-    else if (mimeType) ext = '.' + mimeType.split('/')[1] || '';
     
     const finalName = filename.includes('.') ? filename : filename + ext;
 
@@ -323,9 +321,9 @@ function decodeB64() {
     URL.revokeObjectURL(url);
 
     const status = document.getElementById('file-status');
-    showStatus(status, `✅ 已还原并下载: ${finalName} (${formatBytes(bytes.length)})`, 'success');
+    showStatus(status, uiText('Restored and downloaded: ', '已还原并下载: ') + `${finalName} (${formatBytes(bytes.length)})`, 'success');
   } catch (e) {
-    showToast(`❌ 还原失败: ${e.message}`);
+    showToast(uiText('Restore failed: ', '还原失败: ') + e.message);
   }
 }
 
@@ -347,14 +345,14 @@ function clearInput() {
 
 function copyOutput() {
   const val = document.getElementById('text-output').value;
-  if (!val) { showToast('❌ 没有输出内容'); return; }
-  navigator.clipboard.writeText(val).then(() => showToast('✅ 已复制'));
+  if (!val) { showToast(uiText('No output to copy', '没有输出内容')); return; }
+  copyText(val);
 }
 
 function downloadOutput() {
   const val = document.getElementById('text-output').value;
-  if (!val) { showToast('❌ 没有输出内容'); return; }
-  const ext = currentDir === 'encode' ? '.txt' : '.b64';
+  if (!val) { showToast(uiText('No output to download', '没有输出内容')); return; }
+  const ext = currentDir === 'encode' ? '.b64' : '.txt';
   const blob = new Blob([val], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -365,6 +363,15 @@ function downloadOutput() {
 }
 
 /* ======== Utilities ======== */
+async function copyText(value) {
+  try {
+    await navigator.clipboard.writeText(value);
+    showToast(uiText('Copied', '已复制'));
+  } catch {
+    showToast(uiText('Copy failed', '复制失败'));
+  }
+}
+
 function formatBytes(bytes) {
   if (bytes === 0) return '0 B';
   if (bytes < 1024) return bytes + ' B';
